@@ -1,9 +1,11 @@
 'use client';
+// components/visitor/CharitiesClient.js
+// UPDATED: cards now link to /charities/[slug] detail page
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Search, Heart, ExternalLink, Star } from 'lucide-react';
+import { Search, Heart, ExternalLink, Star, ArrowRight } from 'lucide-react';
 
 export default function CharitiesClient({ initialCharities, categories }) {
   const [search, setSearch] = useState('');
@@ -72,7 +74,6 @@ export default function CharitiesClient({ initialCharities, categories }) {
             ))}
           </div>
         </div>
-
         <div className="mt-4 text-sm text-[#7aad8a]">
           {filtered.length} {filtered.length === 1 ? 'charity' : 'charities'} found
         </div>
@@ -96,8 +97,10 @@ export default function CharitiesClient({ initialCharities, categories }) {
                 className="stat-card card-hover flex flex-col"
               >
                 {/* Banner/Logo area */}
-                <div className="h-32 rounded-xl mb-4 overflow-hidden relative"
-                  style={{ background: 'linear-gradient(135deg, #1a2e23, #172219)' }}>
+                <div
+                  className="h-32 rounded-xl mb-4 overflow-hidden relative"
+                  style={{ background: 'linear-gradient(135deg, #1a2e23, #172219)' }}
+                >
                   {charity.banner_url ? (
                     <img src={charity.banner_url} alt={charity.name} className="w-full h-full object-cover opacity-60" />
                   ) : (
@@ -129,7 +132,7 @@ export default function CharitiesClient({ initialCharities, categories }) {
                   </div>
 
                   <p className="text-sm text-[#7aad8a] leading-relaxed mb-4 line-clamp-3">
-                    {charity.description}
+                    {charity.short_bio || charity.description}
                   </p>
 
                   {/* Upcoming events */}
@@ -151,6 +154,7 @@ export default function CharitiesClient({ initialCharities, categories }) {
                   )}
                 </div>
 
+                {/* Actions */}
                 <div className="flex items-center gap-3 pt-4 border-t border-[#1f3527]">
                   {charity.website && (
                     <a
@@ -163,6 +167,14 @@ export default function CharitiesClient({ initialCharities, categories }) {
                       Website
                     </a>
                   )}
+                  {/* Read More → detail page */}
+                  <Link
+                    href={`/charities/${charity.slug || charity.id}`}
+                    className="flex items-center gap-1 text-sm text-[#7aad8a] hover:text-[#4ade80] transition-colors"
+                  >
+                    <ArrowRight className="w-3 h-3" />
+                    Read More
+                  </Link>
                   <Link href="/subscribe" className="ml-auto btn-primary text-xs py-2 px-4">
                     Support This
                   </Link>
