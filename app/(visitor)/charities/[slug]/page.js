@@ -3,6 +3,11 @@ import { supabaseAdmin } from '@/lib/supabase';
 import CharityDetailClient from '@/components/visitor/CharityDetailClient';
 import { notFound } from 'next/navigation';
 
+// Force dynamic rendering — no cache
+export const dynamic = 'force-dynamic';
+// OR use ISR with short revalidation (better for production)
+export const revalidate = 30; // re-fetch every 30 seconds
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const { data: charity } = await supabaseAdmin

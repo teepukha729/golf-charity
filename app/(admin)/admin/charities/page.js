@@ -570,6 +570,7 @@ export default function AdminCharitiesPage() {
   const handleSave = async () => {
     if (!form.name) return toast.error('Charity name required');
     setSaving(true);
+
     const isEdit = !!editId;
     const res = await fetch('/api/charities', {
       method: isEdit ? 'PUT' : 'POST',
@@ -577,14 +578,24 @@ export default function AdminCharitiesPage() {
       body: JSON.stringify(isEdit ? { id: editId, ...form } : form),
     });
     const data = await res.json();
-    setSaving(false);
+
     if (res.ok) {
+      // 👇 Trigger revalidation so visitor pages update immediately
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: data.charity?.slug || form.slug }),
+      });
+
       toast.success(`Charity ${isEdit ? 'updated' : 'created'}!`);
       setShowForm(false);
       setEditId(null);
       setForm(emptyForm);
       fetchCharities();
-    } else toast.error(data.error || 'Something went wrong');
+    } else {
+      toast.error(data.error || 'Something went wrong');
+    }
+    setSaving(false);
   };
 
   const handleDelete = async () => {

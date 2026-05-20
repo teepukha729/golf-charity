@@ -1,5 +1,6 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import CharitiesClient from '@/components/visitor/CharitiesClient';
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Charities | Golf Charity Platform',
