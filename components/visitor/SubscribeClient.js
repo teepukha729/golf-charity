@@ -193,26 +193,6 @@ export default function SubscribeClient() {
           </div>
         </div>
       </section>
-
-      {/* Prize Pool Transparency */}
-      <section className="max-w-4xl mx-auto px-6">
-        <div className="stat-card">
-          <h3 className="font-display text-xl font-bold text-white mb-6 text-center">Where Your Subscription Goes</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { label: 'Prize Pool', pct: '60%', color: '#4ade80', desc: 'Monthly draw prizes (40% jackpot, 35% four-match, 25% three-match)' },
-              { label: 'Charity', pct: '10%+', color: '#f87171', desc: 'Minimum 10% to your chosen charity (you can increase this)' },
-              { label: 'Platform', pct: '30%', color: '#d4af37', desc: 'Platform operations, payment processing, and maintenance' },
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="text-3xl font-display font-bold mb-2" style={{ color: item.color }}>{item.pct}</div>
-                <div className="font-semibold text-white mb-2">{item.label}</div>
-                <p className="text-xs text-[#7aad8a] leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
